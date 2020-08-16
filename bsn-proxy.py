@@ -49,13 +49,13 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
         return
 
     def do_POST(self, body=True):
-        print(self.headers)
+        # print(self.headers)
         content_len = int(self.headers['content-length'])
         post_body = self.rfile.read(content_len)
         req_header = self.parse_headers()
         del req_header['Host']
 
-        print(bsn_url)
+        # print(bsn_url)
         resp = urllib2.Request(url=bsn_url,
                                headers=merge_two_dicts(dict(req_header), set_header()),
                                data=post_body)
@@ -127,5 +127,5 @@ if __name__ == '__main__':
     print('http server is running as reverse proxy')
 
     while True:
-        time.sleep(9e9)
+        time.sleep(10)
 
