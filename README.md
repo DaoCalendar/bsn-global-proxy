@@ -1,5 +1,7 @@
 # BSN Proxy
 
+Original contributor: [muxueqz](https://github.com/muxueqz/bsn-proxy)
+
 This is a single file utility to adopt BSN service to standard CKB node rpc.
 
 Usage:
