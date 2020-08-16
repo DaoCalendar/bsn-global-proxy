@@ -88,8 +88,8 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
 
 def parse_args(argv=sys.argv[1:]):
     parser = argparse.ArgumentParser(description='Proxy BSN requests')
-    parser.add_argument('--port', dest='port', type=int, default=9999,
-                        help='serve HTTP requests on specified port (default: 9999)')
+    parser.add_argument('--port', dest='port', type=int, default=8114,
+                        help='serve HTTP requests on specified port (default: 8114)')
     parser.add_argument('--bsn-url', dest='bsn_url', required=True,
                         help='bsn url')
     parser.add_argument('--api-key', dest='api_key', required=True,
@@ -114,7 +114,7 @@ class ServerThread(Thread):
 
 if __name__ == '__main__':
     args = parse_args(sys.argv[1:])
-    print('http server is starting on port {}...'.format(args.port))
+    print('http server is starting at http://localhost:{} ...'.format(args.port))
     server_address = ('127.0.0.1', args.port)
     bsn_url = args.bsn_url
 
@@ -124,7 +124,6 @@ if __name__ == '__main__':
     sock.listen(5)
 
     [ServerThread(i) for i in range(100)]
-    print('http server is running as reverse proxy')
 
     while True:
         time.sleep(10)
