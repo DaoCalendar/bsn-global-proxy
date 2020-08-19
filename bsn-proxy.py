@@ -16,40 +16,39 @@ def merge_two_dicts(x, y):
     z.update(y)    # modifies z with y's keys and values & returns None
     return z
 
-def set_header():
+def set_header(isIndexer = False):
     headers = {
-        #  'Host': hostname
-        'X-API-KEY': args.api_key
+        'X-API-KEY': args.api_key,
+        'x-api-sub-path': 'indexer' if isIndexer else 'rpc'
     }
-
     return headers
 
 class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
     protocol_version = 'HTTP/1.0'
-    def do_HEAD(self):
-        self.do_GET(body=False)
+    # def do_HEAD(self):
+    #     self.do_GET(body=False)
 
-    def do_GET(self, body=True):
-        req_header = self.parse_headers()
+    # def do_GET(self, body=True):
+    #     req_header = self.parse_headers()
 
-        del req_header['Host']
-        resp = urllib2.Request(url=bsn_url,
-                               headers=merge_two_dicts(dict(req_header), set_header()),
-                               )
+    #     del req_header['Host']
+    #     resp = urllib2.Request(url=bsn_url,
+    #                            headers=merge_two_dicts(dict(req_header), set_header()),
+    #                            )
 
-        r = urllib2.urlopen(resp)
+    #     r = urllib2.urlopen(resp)
 
-        self.send_response(r.getcode())
-        for k, v in r.getheaders():
-            self.send_header(k, v)
-        self.end_headers()
+    #     self.send_response(r.getcode())
+    #     for k, v in r.getheaders():
+    #         self.send_header(k, v)
+    #     self.end_headers()
 
-        if body:
-            self.wfile.write(r.read())
-        return
+    #     if body:
+    #         self.wfile.write(r.read())
+    #     return
 
     def do_POST(self, body=True):
-        # print(self.headers)
+        newHeader = set_header(self.path.find('indexer') != -1)
         content_len = int(self.headers['content-length'])
         post_body = self.rfile.read(content_len)
         req_header = self.parse_headers()
@@ -57,7 +56,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
 
         # print(bsn_url)
         resp = urllib2.Request(url=bsn_url,
-                               headers=merge_two_dicts(dict(req_header), set_header()),
+                               headers=merge_two_dicts(dict(req_header), newHeader),
                                data=post_body)
 
         r = urllib2.urlopen(resp)
@@ -114,7 +113,7 @@ class ServerThread(Thread):
 
 if __name__ == '__main__':
     args = parse_args(sys.argv[1:])
-    print('http server is starting at http://localhost:{} ...'.format(args.port))
+    print('http server is starting at http://localhost:{}/rpc and http://localhost:{}/indexer for node and indexer service...'.format(args.port, args.port))
     server_address = ('127.0.0.1', args.port)
     bsn_url = args.bsn_url
 
