@@ -15,6 +15,6 @@ Ethereum
 ```py
 $ python3 ./bsn-proxy-eth.py --bsn-url 'https://hk.bsngate.com/api/<your-app-id>/ETH-Mainnet/rpc' --api-key '<your-api-key>'
 ```
-
+[Off-BSN-Access-wiki](https://global.bsnbase.com/static/tmpFile/bzsc/6permissionlessservices/6-4-1.html)
 
 Please register [BSN global](https://global.bsnbase.com/) to obtain a free or high performance plan.
