@@ -12,6 +12,9 @@ $ python3 ./bsn-proxy-ckb.py --bsn-url 'https://hk.bsngate.com/api/<your-app-id>
 If everything goes well, you will have a ckb node rpc server at `http://localhost:8114/rpc`, adn a ckb-indexer rpc server at `http://localhost:8114/indexer`.
 
 Ethereum
+
+[ethereum json rpc handbook](http://cw.hubwiz.com/card/c/ethereum-json-rpc-api/)
+
 ```py
 $ python3 ./bsn-proxy-eth.py --bsn-url 'https://hk.bsngate.com/api/<your-app-id>/ETH-Mainnet/rpc' --api-key '<your-api-key>'
 ```
