@@ -41,7 +41,7 @@ if __name__ == '__main__':
     }
     xapisubpath = args.api_sub_path
     payload = "{\n\t\"jsonrpc\":\"2.0\",\n\t\"method\"" + ":\"" + xapisubpath + "\",\n\t\"params\":[],\n\t\"id\":1\n}"
-    print(payload)
+    print(payload)  //todo the relation between method and id
     response = requests.request(method="POST", url=bsn_url, headers=headers, data=payload)
 
     print(response.text.encode('utf8'))
